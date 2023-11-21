@@ -1,0 +1,12 @@
+﻿@page "{category}/{name:length(3)}" 
+<!-- добавление дополнительных сегментов с параметрами маршрута -->
+<!-- / заменяет маршрут по умолчанию  -->
+<!-- универсальные параметры *other или **other-->
+
+
+@model SampleApp.RazorPage.Pages.AuthModel
+@{
+    ViewData["Title"] = "Privacy Policy";
+}
+
+<h1> @ViewData["Title"] </h1>
