@@ -4,27 +4,30 @@
     ViewData["Title"] = "Регистрация";
 }
 
-<h1>@ViewData["Title"]</h1>
-
-<form asp-action="Index" method="post" role="form">
-
-    <div asp-validation-summary="ModelOnly"></div>
 
 
-    <input type="hidden"  value="1" />
+<div class="row">
 
-    <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Имя</label>
-        <input type="text"  class="form-control" aria-describedby="emailHelp">
-        <div id="textHelp" class="form-text">Имя пользователя</div>
+
+
+    <div class="col-md-6 col-md-offset-3">
+
+        <h1>@ViewData["Title"]</h1>
+
+        <form action="sign.php" method="POST" class="form-signin" role="form">
+            <input type="text" name="name" class="form-control" placeholder="Name"
+                   required autofocus>
+            <input type="email" name="email" class="form-control" placeholder="Email"
+                   required autofocus>
+            <input type="password" name="password" class="form-control"
+                   placeholder="Password" required autofocus>
+            <input type="password" name="password_confirmation" class="form-control"
+                   placeholder="Confirmation" required>
+            <button class="btn btn-lg btn-primary btn-block" type="submit"
+                    name="submit">
+                Create user
+            </button>
+        </form>
     </div>
-
-    <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Возраст</label>
-        <input type="text"  class="form-control" aria-describedby="emailHelp">
-        <div id="textHelp" class="form-text">Возраст</div>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Сохранить</button>
-</form>
+</div>
 
