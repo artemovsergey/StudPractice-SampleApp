@@ -3,12 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleApp.RazorPage", "RazorPagesApp.Sample\SampleApp.RazorPage.csproj", "{FE22BAC2-598B-415C-968C-098913AD3519}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{14E74E57-A8A1-4F25-8011-AC39A6D51CC3}"
-	ProjectSection(SolutionItems) = preProject
-		readme.md = readme.md
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleApp.RazorPage", "SampleApp.RazorPage\SampleApp.RazorPage.csproj", "{FE22BAC2-598B-415C-968C-098913AD3519}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
