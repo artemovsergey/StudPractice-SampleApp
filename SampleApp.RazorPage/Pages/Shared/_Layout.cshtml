@@ -7,24 +7,13 @@
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-theme.min.css" />
-    <!--link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/ -->
     <link rel="stylesheet" href="~/css/custom.css" asp-append-version="true"/>
 </head>
 
 <body>
-    <header class="navbar navbar-fixed-top navbar-inverse">
-        <div class="container">
-            <a href=”#” id="logo">Связист</a>
-            <nav>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href=”#”>Home</a></li>
-                    <li><a href=”#”>Help</a></li>
-                    <li><a href=”#”>About</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
 
+    @await Html.PartialAsync("_Header")
+ 
 
     <div class="container body-content">
         <main>
@@ -32,17 +21,14 @@
         </main>
     </div>
 
-    <footer class="footer container">
-        <nav>
-            <ul>
-                <li><a href=”#”>About</a></li>
-                <li><a href=”#”>Help</a></li>
-            </ul>
-        </nav>
-    </footer>
+    @await Html.PartialAsync("_Footer")
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)

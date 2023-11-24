@@ -39,5 +39,10 @@ namespace SampleApp.RazorPage.Pages
         {
             Console.WriteLine("Hello");
         }
+
+        //public IActionResult OnGetPartial() => Partial("_Header");
+
+
+
     }
 }

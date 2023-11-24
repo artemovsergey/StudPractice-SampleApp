@@ -1,3 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using SampleApp.RazorPage.Models;
+using Vereyon.Web;
+
 namespace SampleApp.RazorPage
 {
     public class Program
@@ -10,6 +14,15 @@ namespace SampleApp.RazorPage
             #if DEBUG
             builder.Services.AddSassCompiler();
             #endif
+
+            // Подключение базы данных SQL Server
+            string connection = builder.Configuration.GetConnectionString("PostgreSQL");
+            builder.Services.AddDbContext<SampleContext>(options => options.UseNpgsql(connection));
+
+
+            builder.Services.AddFlashMessage();
+            builder.Services.AddFlashes();
+
 
             var app = builder.Build();
 

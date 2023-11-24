@@ -2,30 +2,30 @@
 @model SampleApp.RazorPage.Pages.SignModel
 @{
     ViewData["Title"] = "Регистрация";
+    if (ViewData["Error"] != "")
+    {
+        @ViewData["Error"];
+    };
 }
 
+<div flashes></div>
 
+<h1>Регистрация</h1>
 
 <div class="row">
-
-
-
     <div class="col-md-6 col-md-offset-3">
-
-        <h1>@ViewData["Title"]</h1>
-
-        <form action="sign.php" method="POST" class="form-signin" role="form">
-            <input type="text" name="name" class="form-control" placeholder="Name"
+        <form method="POST" class="form-signin" role="form">
+            <input type="text" name="Name" class="form-control" placeholder="Имя"
                    required autofocus>
-            <input type="email" name="email" class="form-control" placeholder="Email"
+            <input type="email" name="Email" class="form-control" placeholder="Почта"
                    required autofocus>
-            <input type="password" name="password" class="form-control"
-                   placeholder="Password" required autofocus>
-            <input type="password" name="password_confirmation" class="form-control"
-                   placeholder="Confirmation" required>
+            <input type="password" name="Password" class="form-control"
+                   placeholder="Пароль" required autofocus>
+            <input type="password" name="PasswordConfirmation" class="form-control"
+                   placeholder="Повторите пароль" required>
             <button class="btn btn-lg btn-primary btn-block" type="submit"
                     name="submit">
-                Create user
+                Создание пользователя
             </button>
         </form>
     </div>
