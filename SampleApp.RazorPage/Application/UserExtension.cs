@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using SampleApp.RazorPage.Pages;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace SampleApp.RazorPage.Application
@@ -9,6 +10,9 @@ namespace SampleApp.RazorPage.Application
         {
             return (user.Password == user.PasswordConfirmation) ? true : false;
         }
+
+
+
 
 
         public static string HashPassword(this Models.User user,string password)
@@ -28,6 +32,8 @@ namespace SampleApp.RazorPage.Application
                 return sb.ToString();
             }
         }
+
+
 
 
     }

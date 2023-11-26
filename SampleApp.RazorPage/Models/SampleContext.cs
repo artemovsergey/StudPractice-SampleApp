@@ -18,6 +18,9 @@ namespace SampleApp.RazorPage.Models
 
         public virtual DbSet<User> Users { get; set; } = null!;
 
+        public virtual DbSet<Micropost> Microposts { get; set; } = null!;
+
+
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
         //    if (!optionsBuilder.IsConfigured)

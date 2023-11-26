@@ -15,6 +15,8 @@ namespace SampleApp.RazorPage.Models
         public string Password {  get; set; } = null!;
         public string PasswordConfirmation { get; set; } = null!;
 
+        public List<Micropost> Microposts { get; set; }
+
     }
 
 }

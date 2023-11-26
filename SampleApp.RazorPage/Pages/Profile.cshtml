@@ -47,3 +47,39 @@
     <a asp-page="./Edit" asp-route-id="@Model.User.Id">Edit</a> |
     <a asp-page="./Index">Back to List</a>
 </div>
+
+
+@if (Model.IsLogin())
+{
+    <div class="row">
+        <aside class="col-md-4">
+            <section class="micropost_form">
+                <form action="index.php" method="POST" class="form-signin" role="form">
+                    <textarea rows="4" cols="50" type="text" name="textarea" required autofocus></textarea>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit" name="submit">Post</button>
+                </form>
+            </section>
+        </aside>
+    </div>
+
+
+    <div class="col-md-8">
+        <h3>
+            Cообщения @Model.User.Microposts.Count()
+        </h3>
+        <ol class="microposts">
+
+            @foreach (var post in Model.User.Microposts)
+            {
+                <p>
+                    <b>@post.User.Name: </b> @post.Content
+                </p>
+            }
+
+        </ol>
+    </div>
+}
+
+
+
+

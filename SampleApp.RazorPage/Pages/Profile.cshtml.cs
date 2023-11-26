@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using SampleApp.RazorPage.Application;
 using SampleApp.RazorPage.Models;
 
 namespace SampleApp.RazorPage.Pages
@@ -16,19 +17,26 @@ namespace SampleApp.RazorPage.Pages
         public ProfileModel(SampleApp.RazorPage.Models.SampleContext context)
         {
             _context = context;
+            
         }
 
         public User User { get; set; }
 
-      
+
+        public bool IsLogin()
+        {
+            return HttpContext.Session.GetString("SampleSession") != null ? true : false;
+        }
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
             {
+               
                 return NotFound();
             }
 
-            User = await _context.Users.FirstOrDefaultAsync(m => m.Id == id);
+            User = await _context.Users.Include(u => u.Microposts).FirstOrDefaultAsync(m => m.Id == id);
 
             if (User == null)
             {
