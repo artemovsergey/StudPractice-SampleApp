@@ -1,11 +1,44 @@
-﻿<header class="navbar navbar-fixed-top navbar-inverse">
+﻿@inject RazorPage.Models.SampleContext db
+
+<header class="navbar navbar-fixed-top navbar-inverse">
     <div class="container">
         <a asp-page="Index" id="logo">Связист</a>
         <nav>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Help</a></li>
-                <li><a href="#">About</a></li>
+                <li><a asp-page="Users">Пользователи</a></li>
+
+
+                @{
+
+                    var httpContext = Context;
+                    var sessionId = httpContext.Session.GetString("SampleSession");
+                    if (sessionId != null)
+                    {
+                        var user = db.Users.Find(Convert.ToInt32(sessionId));
+
+                        <li class="dropdown">
+                            <a href="/Profile/@sessionId" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-haspopup="true" aria-expanded="false">@user.Name<span class="caret"></span></a>
+
+                            <ul class="dropdown-menu">
+
+                                <li><a href="/Profile/@sessionId">Профиль</a></li>
+                                <li><a href="/Update/@sessionId">Обновить данные</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a asp-page="Auth" asp-page-handler="Logout">Выход</a></li>
+
+                            </ul>
+                        </li>
+                    
+                    }
+                    else
+                    {
+                        <li><a asp-page="Auth">Логин</a></li>
+                    }
+                }
+
+
+
             </ul>
         </nav>
     </div>

@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SampleApp.RazorPage.Models;
-using Vereyon.Web;
+
 
 namespace SampleApp.RazorPage
 {
@@ -13,15 +13,27 @@ namespace SampleApp.RazorPage
             builder.Services.AddHealthChecks();
             #if DEBUG
             builder.Services.AddSassCompiler();
-            #endif
+#endif
+
+            builder.Services.AddHttpContextAccessor();
+            // @inject IHttpContextAccessor httpContextAccessor
 
             // Подключение базы данных SQL Server
             string connection = builder.Configuration.GetConnectionString("PostgreSQL");
             builder.Services.AddDbContext<SampleContext>(options => options.UseNpgsql(connection));
 
-
-            builder.Services.AddFlashMessage();
             builder.Services.AddFlashes();
+
+
+            builder.Services.AddSession(options =>
+            {
+                options.Cookie.Name = "SampleSession";
+                //options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.IsEssential = true;
+            });
+
+
+
 
 
             var app = builder.Build();
@@ -46,6 +58,9 @@ namespace SampleApp.RazorPage
 
             app.UseRouting();
             app.UseAuthorization();
+            
+            app.UseSession();
+
 
             /*  Регистрируем все
                 страницы Razor

@@ -1,21 +1,24 @@
 using Core.Flash;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.StaticFiles;
 using SampleApp.RazorPage.Application;
 using SampleApp.RazorPage.Models;
-using Vereyon.Web;
+using System.Security.Cryptography;
+using System.Text;
+
 
 namespace SampleApp.RazorPage.Pages
 {
     public class SignModel : PageModel
     {
         private readonly SampleContext _db;
-        private IFlashMessage _flashMessage;
         private IFlasher _f;
-        public SignModel(SampleContext db, IFlashMessage flashMessage, IFlasher f)
+
+       
+        public SignModel(SampleContext db, IFlasher f)
         {
             _db = db;
-            _flashMessage = flashMessage;
             _f = f;
         }
 
@@ -33,6 +36,10 @@ namespace SampleApp.RazorPage.Pages
                     _f.Flash(Types.Warning, $"Пароли должны совпадать!", dismissable: true);
                     return RedirectToPage("./Sign");
                 }
+
+
+                user.Password = user.HashPassword(user.Password);
+                user.PasswordConfirmation = user.HashPassword(user.PasswordConfirmation);
 
                 _db.Users.Add(user);
                 _db.SaveChanges();
