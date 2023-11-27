@@ -2,13 +2,14 @@
 {
     public class Micropost
     {
-        public int Id { get; set; }
+        public int id { get; set; }
         public string Content { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
 
-        // при миграции EF создаст UserId
+        public int UserId { get; set; }
+
         public User User { get; set; }
     }
 }

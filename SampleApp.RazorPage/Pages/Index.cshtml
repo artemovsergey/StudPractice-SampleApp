@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "/"
 @model IndexModel
 @{
     ViewData["Title"] = "Главная";
@@ -9,10 +9,8 @@
 <div class="center jumbotron">
 
     @{
-        var httpContext = HttpContext;
-        var sessionId = httpContext.Session.GetString("SampleSession");
 
-        if (sessionId == null)
+        if (Model.sessionId == null)
         {
             <h1>Добро пожаловать в приложение Sample</h1>
 
@@ -22,11 +20,35 @@
         }
         else
         {
-            <h1>Добро пожаловать!</h1>
+            <div class="row">
+                <aside class="col-md-4">
+                    <section class="micropost_form">
+                        <form action="" method="POST" class="form-signin" role="form">
+                            <textarea rows="4" cols="50" type="text" name="message" required autofocus></textarea>
+                            <button class="btn btn-lg btn-primary btn-block" type="submit" name="submit">Post</button>
+                        </form>
+                    </section>
+                </aside>
+
+                <div class="col-md-8">
+                    <h3>
+                        Cообщения @Model.User.Microposts.Count()
+                    </h3>
+                    <ol class="microposts">
+
+                        @foreach (var post in Model.User.Microposts)
+                        {
+                            <p>
+                                <b>@post.User.Name: </b> @post.Content
+                                <a asp-page="Index" asp-page-handler="Delete" asp-route-id="@post.id" class="btn btn-info">Удалить</a>
+                            </p>
+                        }
+
+                    </ol>
+                </div>
+
+            </div>
         }
-    }
 
-
-
-
+     }
 </div>
