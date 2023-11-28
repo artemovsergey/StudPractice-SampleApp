@@ -13,9 +13,10 @@ namespace SampleApp.RazorPage
             builder.Services.AddHealthChecks();
             #if DEBUG
             builder.Services.AddSassCompiler();
-#endif
+            #endif
 
             builder.Services.AddHttpContextAccessor();
+
             // @inject IHttpContextAccessor httpContextAccessor
 
             // Подключение базы данных SQL Server
@@ -44,6 +45,7 @@ namespace SampleApp.RazorPage
             if (app.Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+               
             }
             else
             {

@@ -12,10 +12,12 @@ namespace SampleApp.RazorPage.Pages
     public class UsersModel : PageModel
     {
         private readonly SampleApp.RazorPage.Models.SampleContext _context;
-
-        public UsersModel(SampleApp.RazorPage.Models.SampleContext context)
+        private readonly ILogger<UsersModel> _log;
+        
+        public UsersModel(SampleApp.RazorPage.Models.SampleContext context, ILogger<UsersModel> log)
         {
             _context = context;
+            _log = log;
         }
 
         public IList<User> User { get;set; }
@@ -24,5 +26,25 @@ namespace SampleApp.RazorPage.Pages
         {
             User = await _context.Users.ToListAsync();
         }
+
+
+        public async Task<IActionResult> OnGetRemoveAsync(int id)
+        {
+            try
+            {
+                var user = await _context.Users.FindAsync(id);
+                _context.Users.Remove(user);
+                _context.SaveChanges();
+                return RedirectToPage();
+            }
+            catch(Exception ex)
+            {
+                _log.LogError($"{ex.Message}");        
+            }
+            return Page();
+        }
+
+
+
     }
 }

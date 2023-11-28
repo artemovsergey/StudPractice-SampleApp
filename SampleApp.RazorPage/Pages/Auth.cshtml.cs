@@ -22,7 +22,6 @@ namespace SampleApp.RazorPage.Pages
         }
 
 
-
         public IActionResult OnPost(User user)
         {
 
@@ -38,7 +37,7 @@ namespace SampleApp.RazorPage.Pages
             else
             {
                 _f.Flash(Types.Danger, $"Not valid login or password!", dismissable: true);
-                return Page();
+                return RedirectToPage();
             }
 
         }

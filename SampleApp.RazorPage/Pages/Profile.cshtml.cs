@@ -12,21 +12,14 @@ namespace SampleApp.RazorPage.Pages
 {
     public class ProfileModel : PageModel
     {
-        private readonly SampleApp.RazorPage.Models.SampleContext _context;
+        private readonly SampleContext _context;
 
-        public ProfileModel(SampleApp.RazorPage.Models.SampleContext context)
+        public ProfileModel(SampleContext context)
         {
-            _context = context;
-            
+            _context = context;  
         }
 
         public User User { get; set; }
-
-
-        public bool IsLogin()
-        {
-            return HttpContext.Session.GetString("SampleSession") != null ? true : false;
-        }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {

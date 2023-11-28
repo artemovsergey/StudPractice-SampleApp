@@ -10,8 +10,7 @@
 
                 @{
 
-                    var httpContext = Context;
-                    var sessionId = httpContext.Session.GetString("SampleSession");
+                    var sessionId = Context.Session.GetString("SampleSession");
                     if (sessionId != null)
                     {
                         var user = db.Users.Find(Convert.ToInt32(sessionId));
@@ -23,7 +22,7 @@
                             <ul class="dropdown-menu">
 
                                 <li><a href="/Profile/@sessionId">Профиль</a></li>
-                                <li><a href="/Update/@sessionId">Обновить данные</a></li>
+                                <li><a href="/Edit/@sessionId">Обновить данные</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li><a asp-page="Auth" asp-page-handler="Logout">Выход</a></li>
 

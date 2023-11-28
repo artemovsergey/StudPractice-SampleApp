@@ -1,49 +1,34 @@
-﻿@page "/Update/{id}"
+﻿@page "/Edit/{id}"
 @model SampleApp.RazorPage.Pages.EditModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Обновление";
 }
 
-<h2>Edit</h2>
+<div flashes></div>
 
-<h4>User</h4>
-<hr />
+<h1>Обновление</h1>
+
 <div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="User.Id" />
-            <div class="form-group">
-                <label asp-for="User.Name" class="control-label"></label>
-                <input asp-for="User.Name" class="form-control" />
-                <span asp-validation-for="User.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.Email" class="control-label"></label>
-                <input asp-for="User.Email" class="form-control" />
-                <span asp-validation-for="User.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.Password" class="control-label"></label>
-                <input asp-for="User.Password" class="form-control" />
-                <span asp-validation-for="User.Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.PasswordConfirmation" class="control-label"></label>
-                <input asp-for="User.PasswordConfirmation" class="form-control" />
-                <span asp-validation-for="User.PasswordConfirmation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+    <div class="col-md-6 col-md-offset-3">
+        <form method="post" class="form-signin" role="form">
+            <input type="text" name="Name" class="form-control" placeholder="Имя"
+                   required autofocus>
+            <input type="email" name="Email" class="form-control" placeholder="Почта"
+                   required autofocus>
+            <input type="password" name="Password" class="form-control"
+                   placeholder="Пароль" required autofocus>
+            <input type="password" name="PasswordConfirmation" class="form-control"
+                   placeholder="Повторите пароль" required>
+            <button class="btn btn-lg btn-primary btn-block" type="submit"
+                    name="submit">
+                Обновить пользователя
+            </button>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -2,21 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Core.Flash;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SampleApp.RazorPage.Application;
 using SampleApp.RazorPage.Models;
 
 namespace SampleApp.RazorPage.Pages
 {
     public class EditModel : PageModel
     {
-        private readonly SampleApp.RazorPage.Models.SampleContext _context;
+        private readonly SampleContext _context;
+        private readonly IFlasher _f;
+        private readonly ILogger<EditModel> _log;
 
-        public EditModel(SampleApp.RazorPage.Models.SampleContext context)
+        public EditModel(SampleContext context, IFlasher f, ILogger<EditModel> log)
         {
             _context = context;
+            _f = f;
+            _log = log;
         }
 
         [BindProperty]
@@ -26,6 +32,7 @@ namespace SampleApp.RazorPage.Pages
         {
             if (id == null)
             {
+               
                 return NotFound();
             }
 
@@ -40,10 +47,10 @@ namespace SampleApp.RazorPage.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+
+
+            User.Password = User.HashPassword(User.Password);
+            User.PasswordConfirmation = User.HashPassword(User.PasswordConfirmation);
 
             _context.Attach(User).State = EntityState.Modified;
 

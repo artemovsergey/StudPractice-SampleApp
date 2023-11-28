@@ -1,39 +1,33 @@
 ﻿@page "/Profile/{id}";
 @model SampleApp.RazorPage.Pages.ProfileModel
 
-@if (Model.IsLogin())
-{
-    <div class="row">
+<div class="row">
 
-        <div class="col-md-4">
-            <h1>
-                @Model.User.Name
-            </h1>
-
-        </div>
-
-
-        <div class="col-md-8">
-            <h3>
-                Cообщения @Model.User.Microposts.Count()
-            </h3>
-            <ol class="microposts">
-
-                @foreach (var post in Model.User.Microposts)
-                {
-                    <p>
-                        <b>@post.User.Name: </b> @post.Content
-                    </p>
-                }
-
-            </ol>
-        </div>
-
+    <div class="col-md-4">
+        <h1>
+            @Model.User.Name
+        </h1>
     </div>
 
 
-    
-}
+    <div class="col-md-8">
+        <h3>
+            Cообщения @Model.User.Microposts.Count()
+        </h3>
+        <ol class="microposts">
+
+            @foreach (var post in Model.User.Microposts)
+            {
+                <p>
+                    <b>@post.User.Name: </b> @post.Content
+                </p>
+            }
+
+        </ol>
+    </div>
+
+</div>
+
 
 
 
