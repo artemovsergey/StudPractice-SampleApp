@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SampleApp.RazorPage.Models;
@@ -11,9 +12,11 @@ using SampleApp.RazorPage.Models;
 namespace SampleApp.RazorPage.Migrations
 {
     [DbContext(typeof(SampleContext))]
-    partial class SampleContextModelSnapshot : ModelSnapshot
+    [Migration("20231129162123_AddColumnAdminToUsers")]
+    partial class AddColumnAdminToUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,27 +51,6 @@ namespace SampleApp.RazorPage.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Microposts");
-                });
-
-            modelBuilder.Entity("SampleApp.RazorPage.Models.Relation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("FollowedUserId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Relation");
                 });
 
             modelBuilder.Entity("SampleApp.RazorPage.Models.User", b =>
@@ -119,22 +101,9 @@ namespace SampleApp.RazorPage.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("SampleApp.RazorPage.Models.Relation", b =>
-                {
-                    b.HasOne("SampleApp.RazorPage.Models.User", "User")
-                        .WithMany("Relations")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("SampleApp.RazorPage.Models.User", b =>
                 {
                     b.Navigation("Microposts");
-
-                    b.Navigation("Relations");
                 });
 #pragma warning restore 612, 618
         }

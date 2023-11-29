@@ -1,4 +1,6 @@
-﻿using SampleApp.RazorPage.Pages;
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+using SampleApp.RazorPage.Models;
+using SampleApp.RazorPage.Pages;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -6,9 +8,20 @@ namespace SampleApp.RazorPage.Application
 {
     public static class UserExtension
     {
+
         public static bool IsPasswordConfirmation(this Models.User user)
         {
             return (user.Password == user.PasswordConfirmation) ? true : false;
+        }
+
+        public static bool IsFollow(this User user, User u)
+        {
+            using(SampleContext db = new SampleContext())
+            {
+                Relation r = db.Relation.Where(r => r.UserId == user.Id && r.FollowedUserId == u.Id).FirstOrDefault() as Relation;
+                return (r != null) ? true : false;
+            }
+
         }
 
 

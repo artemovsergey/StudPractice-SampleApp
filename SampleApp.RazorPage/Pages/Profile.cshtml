@@ -1,22 +1,33 @@
 ﻿@page "/Profile/{id}";
 @model SampleApp.RazorPage.Pages.ProfileModel
 
+
 <div class="row">
 
-    <div class="col-md-4">
+    <div class="col-md-4 center">
         <h1>
-            @Model.User.Name
+
         </h1>
+
+
+        <form method="post">
+            
+                <button class="btn btn-success" type="submit">Подписаться</button>
+         
+                <button class="btn btn-danger" type="submit">Отписаться</button>
+        </form>
+
+
     </div>
 
 
     <div class="col-md-8">
         <h3>
-            Cообщения @Model.User.Microposts.Count()
+            Cообщения @Model.ProfileUser.Microposts.Count()
         </h3>
         <ol class="microposts">
 
-            @foreach (var post in Model.User.Microposts)
+            @foreach (var post in Model.ProfileUser.Microposts)
             {
                 <p>
                     <b>@post.User.Name: </b> @post.Content

@@ -20,6 +20,8 @@ namespace SampleApp.RazorPage.Models
 
         public virtual DbSet<Micropost> Microposts { get; set; } = null!;
 
+        public virtual DbSet<Relation> Relation { get; set; } = null!;
+
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{

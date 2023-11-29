@@ -5,7 +5,7 @@
         <a asp-page="Index" id="logo">Связист</a>
         <nav>
             <ul class="nav navbar-nav navbar-right">
-                <li><a asp-page="Users">Пользователи</a></li>
+               
 
 
                 @{
@@ -13,6 +13,8 @@
                     var sessionId = Context.Session.GetString("SampleSession");
                     if (sessionId != null)
                     {
+                        <li><a asp-page="Users">Пользователи</a></li>
+
                         var user = db.Users.Find(Convert.ToInt32(sessionId));
 
                         <li class="dropdown">

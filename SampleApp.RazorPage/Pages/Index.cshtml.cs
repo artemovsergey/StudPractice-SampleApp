@@ -27,7 +27,6 @@ namespace SampleApp.RazorPage.Pages
             _db = db;
         }
 
-        // On{verb}[handler][Async]
         public async Task<IActionResult> OnGetAsync()
         {
             sessionId = HttpContext.Session.GetString("SampleSession");
@@ -102,8 +101,6 @@ namespace SampleApp.RazorPage.Pages
                 _logger.Log(LogLevel.Error, $"Ошибка удаления сообщения: {ex.InnerException}");
                 _logger.Log(LogLevel.Error, $"Модель привязки из маршрута: {id}");
             }
-
-
 
             return Page();
 

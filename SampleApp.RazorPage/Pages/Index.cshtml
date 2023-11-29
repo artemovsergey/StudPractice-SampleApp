@@ -23,10 +23,11 @@
             <div class="row">
                 <aside class="col-md-4">
                     <section class="micropost_form">
-                        <form action="" method="POST" class="form-signin" role="form">
+                        <form action="" method="POST" class="form-signin" role="form" enctype="multipart/form-data">
                             <textarea rows="4" cols="50" type="text" name="message" required autofocus></textarea>
                             <button class="btn btn-lg btn-primary btn-block" type="submit" name="submit">Post</button>
-                        </form>
+                            <input  class="btn btn-sm btn-primary btn-block" type="file" name="file">
+                         </form>
                     </section>
                 </aside>
 
@@ -40,7 +41,9 @@
                         {
                             <p>
                                 <b>@post.User.Name: </b> @post.Content
-                                <a asp-page="Index" asp-page-handler="Delete" asp-route-id="@post.id" class="btn btn-info">Удалить</a>
+
+                                 <a asp-page="Index" asp-page-handler="Delete" asp-route-id="@post.id" class="btn btn-info">Удалить</a>
+
                             </p>
                         }
 

@@ -11,20 +11,36 @@ namespace SampleApp.RazorPage.Pages
 {
     public class UsersModel : PageModel
     {
-        private readonly SampleApp.RazorPage.Models.SampleContext _context;
+        private readonly SampleContext _context;
         private readonly ILogger<UsersModel> _log;
         
-        public UsersModel(SampleApp.RazorPage.Models.SampleContext context, ILogger<UsersModel> log)
+        public UsersModel(SampleContext context, ILogger<UsersModel> log)
         {
             _context = context;
             _log = log;
         }
 
-        public IList<User> User { get;set; }
+        public IList<User> Users { get;set; }
 
-        public async Task OnGetAsync()
+        public User User { get; set; }
+
+        public string sessionId { get; set; }
+
+        public async Task<IActionResult> OnGetAsync()
         {
-            User = await _context.Users.ToListAsync();
+            sessionId = HttpContext.Session.GetString("SampleSession");
+            Users = await _context.Users.ToListAsync();
+
+            if (sessionId != null)
+            {
+                User = await _context.Users.Include(u => u.Microposts).FirstOrDefaultAsync(m => m.Id == Convert.ToInt32(sessionId));
+                return Page();
+            }
+            else
+            {
+                return RedirectToPage("Auth");
+            }
+
         }
 
 
