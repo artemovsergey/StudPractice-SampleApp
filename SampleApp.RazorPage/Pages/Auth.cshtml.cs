@@ -17,27 +17,30 @@ namespace SampleApp.RazorPage.Pages
             _f= f;
         }
 
+        [BindProperty]
+        public User Input { get; set; }
+
         public void OnGet()
         {
         }
 
 
-        public IActionResult OnPost(User user)
+        public IActionResult OnPost()
         {
 
-            User current_user = _db.Users.Where(u => u.Email == user.Email && u.Password == user.HashPassword(user.Password)).FirstOrDefault<User>() as User;
+            User current_user = _db.Users.Where(u => u.Email == Input.Email && u.Password == Input.HashPassword(Input.Password)).FirstOrDefault<User>() as User;
             if(current_user != null)
             {
                 HttpContext.Session.SetString("SampleSession", $"{current_user.Id}");
-                
-                _f.Flash(Types.Success, $"Welcome {current_user.Name}!", dismissable: true);
+     
+                _f.Flash(Types.Success, $"Добро пожаловать, {current_user.Name}!", dismissable: true);
                
                 return RedirectToPage("Index");
             }
             else
             {
-                _f.Flash(Types.Danger, $"Not valid login or password!", dismissable: true);
-                return RedirectToPage();
+                _f.Flash(Types.Danger, $"Неверный логин или пароль!", dismissable: true);
+                return Page();
             }
 
         }

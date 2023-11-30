@@ -12,11 +12,12 @@
 
 <body>
 
-    @await Html.PartialAsync("_Header")
+    @await Html.PartialAsync("_Header", Context.Session.GetString("SampleSession"))
  
 
     <div class="container body-content">
         <main>
+            <div flashes></div>
             @RenderBody()
         </main>
     </div>
@@ -27,8 +28,8 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
     <script src="~/lib/jquery/dist/jquery.js"></script>
 
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
-    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,16 +13,30 @@ namespace SampleApp.RazorPage.Models
     public partial class User
     {
         public int Id { get; set; }
-        public string Name { get; set; } = null!;
-        public string Email { get; set; } = null!;
-        public string Password {  get; set; } = null!;
-        public string PasswordConfirmation { get; set; } = null!;
 
+        [Required(ErrorMessage = "Требуется имя")]
+        public string Name { get; set; }
+
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
+        public string Password {  get; set; }
+
+        [Required]
+        public string PasswordConfirmation { get; set; }
+
+
+        [ValidateNever]
         public bool IsAdmin { get; set; } = false;
-
+        
+        [ValidateNever]
         public virtual List<Relation> Relations { get; set; }
-        public List<Micropost> Microposts { get; set; }
 
+        [ValidateNever]
+        public List<Micropost> Microposts { get; set; }
 
         public bool IsFollow(User user, User u)
         {

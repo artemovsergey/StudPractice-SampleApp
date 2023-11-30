@@ -1,8 +1,9 @@
 ﻿@inject RazorPage.Models.SampleContext db
+@model string
 
 <header class="navbar navbar-fixed-top navbar-inverse">
     <div class="container">
-        <a asp-page="Index" id="logo">Связист</a>
+        <a asp-page="Index" id="logo">@Model</a>
         <nav>
             <ul class="nav navbar-nav navbar-right">
                

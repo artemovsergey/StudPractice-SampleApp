@@ -4,23 +4,27 @@
     ViewData["Title"] = "Регистрация";
 }
 
-<div flashes></div>
-
 <h1>Регистрация</h1>
 
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
         <form method="post" class="form-signin" role="form">
-            <input type="text" name="Name" class="form-control" placeholder="Имя"
-                   required autofocus>
-            <input type="email" name="Email" class="form-control" placeholder="Почта"
-                   required autofocus>
-            <input type="password" name="Password" class="form-control"
-                   placeholder="Пароль" required autofocus>
-            <input type="password" name="PasswordConfirmation" class="form-control"
-                   placeholder="Повторите пароль" required>
-            <button class="btn btn-lg btn-primary btn-block" type="submit"
-                    name="submit">
+            
+            <div asp-validation-summary="All"></div>
+
+            <span asp-validation-for="Input.Name"></span>
+            <input type="text" asp-for="Input.Name" class="form-control" placeholder="Имя" autofocus>
+            
+            <span asp-validation-for="Input.Email"></span>
+            <input type="email" asp-for="Input.Email" class="form-control" placeholder="Почта" autofocus>
+            
+            <span asp-validation-for="Input.Password"></span>
+            <input type="password" asp-for="Input.Password" class="form-control" placeholder="Пароль" required autofocus>
+            
+            <span asp-validation-for="Input.PasswordConfirmation"></span>
+            <input type="password" asp-for="Input.PasswordConfirmation" class="form-control" placeholder="Повторите пароль" required>
+            
+            <button class="btn btn-lg btn-primary btn-block" type="submit">
                 Создание пользователя
             </button>
         </form>
