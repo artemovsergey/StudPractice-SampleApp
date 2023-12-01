@@ -15,17 +15,17 @@ namespace SampleApp.RazorPage.Pages
         private readonly ILogger<IndexModel> _logger;
         private IFlasher _f;
         private SampleContext _db;
-
-        public User User { get; set; }
-
-        public string sessionId { get; set; }
-
         public IndexModel(ILogger<IndexModel> logger, IFlasher f, SampleContext db)
         {
             _logger = logger;
             _f = f;
             _db = db;
         }
+
+
+        public User User { get; set; }
+        public string sessionId { get; set; }
+
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -42,7 +42,6 @@ namespace SampleApp.RazorPage.Pages
             }
             
         }
-
 
         public async Task<IActionResult> OnPostAsync(string message)
         {

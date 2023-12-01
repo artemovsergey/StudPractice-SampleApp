@@ -6,11 +6,7 @@
         <a asp-page="Index" id="logo">@Model</a>
         <nav>
             <ul class="nav navbar-nav navbar-right">
-               
-
-
                 @{
-
                     var sessionId = Context.Session.GetString("SampleSession");
                     if (sessionId != null)
                     {

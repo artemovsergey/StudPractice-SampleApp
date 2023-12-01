@@ -22,43 +22,13 @@ namespace SampleApp.RazorPage.Pages
         }
 
 
-
-
         public User ProfileUser { get; set; }
         public bool IsFollow { get; set; }
 
         public async Task<IActionResult> OnGetAsync([FromRoute]int? id)
         {
-            if (id == null)
-            {
-               
-                return NotFound();
-            }
-
-            ProfileUser = await _context.Users.Include(u => u.Microposts).FirstOrDefaultAsync(m => m.Id == id) as User;
-            
-            if (ProfileUser == null)
-            {
-                return NotFound();
-            }
+            ProfileUser = await _context.Users.Include(u => u.Microposts).FirstOrDefaultAsync(m => m.Id == id) as User;   
             return Page();
-        }
-
-        public async Task<IActionResult> OnPostAsync()
-        {
-            
-            try
-            {
-                //_context.Relation.Add(new Relation() { UserId = User.Id, FollowedUserId == })
-            }
-            catch(Exception ex)
-            {
-                _logger.Log(LogLevel.Error, $"{ex.Message}");
-            }
-
-
-            _logger.Log(LogLevel.Information, $"{IsFollow}");
-            return RedirectToPage();
         }
 
     }

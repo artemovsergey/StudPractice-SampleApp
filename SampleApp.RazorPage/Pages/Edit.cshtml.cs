@@ -26,41 +26,28 @@ namespace SampleApp.RazorPage.Pages
         }
 
         [BindProperty]
-        public User User { get; set; }
+        public User Input { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null)
-            {
-               
-                return NotFound();
-            }
-
-            User = await _context.Users.FirstOrDefaultAsync(m => m.Id == id);
-
-            if (User == null)
-            {
-                return NotFound();
-            }
+            Input = await _context.Users.FirstOrDefaultAsync(m => m.Id == id);
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-
-
-            User.Password = User.HashPassword(User.Password);
-            User.PasswordConfirmation = User.HashPassword(User.PasswordConfirmation);
-
-            _context.Attach(User).State = EntityState.Modified;
+            Input.Password = Input.HashPassword(Input.Password);
+            Input.PasswordConfirmation = Input.HashPassword(Input.PasswordConfirmation);
+            _context.Attach(Input).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+              await _context.SaveChangesAsync();
+              _f.Flash(Types.Success, $"Пользователь {Input.Name} обновлен!", dismissable: true);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(User.Id))
+                if (!UserExists(Input.Id))
                 {
                     return NotFound();
                 }
