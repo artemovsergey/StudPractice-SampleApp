@@ -1,15 +1,19 @@
-﻿namespace SampleApp.RazorPage.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace SampleApp.RazorPage.Models;
+
+public partial class Micropost
 {
-    public class Micropost
-    {
-        public int id { get; set; }
-        public string Content { get; set; }
+    public int Id { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
-        public DateTime UpdatedAt { get; set; } = DateTime.Now;
+    public string Content { get; set; } = null!;
 
-        public int UserId { get; set; }
+    public int UserId { get; set; }
 
-        public User User { get; set; }
-    }
+    public DateTime CreatedAt { get; set; }
+
+    public DateTime UpdatedAt { get; set; }
+
+    public virtual User User { get; set; } = null!;
 }

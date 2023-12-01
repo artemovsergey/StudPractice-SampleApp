@@ -14,20 +14,6 @@ namespace SampleApp.RazorPage.Application
             return (user.Password == user.PasswordConfirmation) ? true : false;
         }
 
-        public static bool IsFollow(this User user, User u)
-        {
-            using(SampleContext db = new SampleContext())
-            {
-                Relation r = db.Relation.Where(r => r.UserId == user.Id && r.FollowedUserId == u.Id).FirstOrDefault() as Relation;
-                return (r != null) ? true : false;
-            }
-
-        }
-
-
-
-
-
         public static string HashPassword(this Models.User user,string password)
         {
             // Реализация хеширования пароля с использованием MD5

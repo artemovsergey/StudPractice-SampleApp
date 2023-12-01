@@ -20,9 +20,9 @@ namespace SampleApp.RazorPage
             // @inject IHttpContextAccessor httpContextAccessor
 
             // Подключение базы данных SQL Server
-            string connection = builder.Configuration.GetConnectionString("PostgreSQL");
-            builder.Services.AddDbContext<SampleContext>(options => options.UseNpgsql(connection));
-
+            string connection = builder.Configuration.GetConnectionString("DefaultConnection");
+            //builder.Services.AddDbContext<SampleContext>(options => options.UseNpgsql(connection));
+            builder.Services.AddDbContext<SampleContext>(options => options.UseSqlServer(connection));
             builder.Services.AddFlashes();
 
 
