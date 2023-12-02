@@ -25,6 +25,12 @@
              }
           
         </form>
+
+        <a class="btn btn-primary" asp-page="Followers" asp-route-id=@Model.ProfileUser.Id>Подписчики</a>
+
+        <a class="btn btn-primary" asp-page="Followeds" asp-route-id=@Model.ProfileUser.Id>Подписки</a>
+
+
     </div>
 
     <div class="col-md-8">
