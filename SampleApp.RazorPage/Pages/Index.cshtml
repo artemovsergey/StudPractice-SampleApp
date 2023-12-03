@@ -32,11 +32,14 @@
 
                 <div class="col-md-8">
                     <h3>
-                        Cообщения @Model.User.Microposts.Count()
+                        Cообщения @Model.Messages.Count()
                     </h3>
                     <ol class="microposts">
 
-                        @foreach (var post in Model.User.Microposts.OrderByDescending(p => p.CreatedAt) )
+
+                    
+
+                        @foreach (var post in Model.Messages.OrderByDescending(p => p.CreatedAt) )
                         {
                             <p>
                                

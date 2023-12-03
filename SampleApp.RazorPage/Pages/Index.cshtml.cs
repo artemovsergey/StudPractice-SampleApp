@@ -26,14 +26,40 @@ namespace SampleApp.RazorPage.Pages
         public User User { get; set; }
         public string sessionId { get; set; }
 
+        public IEnumerable<User> Followeds { get; set; }
+
+        public List<User> Users { get; set; } = new();
+
+        public List<Micropost> Messages { get; set; } = new();
 
         public async Task<IActionResult> OnGetAsync()
         {
+
             sessionId = HttpContext.Session.GetString("SampleSession");
 
             if (sessionId != null)
             {
-                User = await _db.Users.Include(u => u.Microposts).FirstOrDefaultAsync(m => m.Id == Convert.ToInt32(sessionId));
+                User = await _db.Users.Include(u => u.Microposts)
+                                      .Include(u => u.RelationFollowers).ThenInclude(r => r.Followed)
+                                      .FirstOrDefaultAsync(m => m.Id == Convert.ToInt32(sessionId));
+
+                Followeds = User.RelationFollowers.Select(item => item.Followed).ToList();
+                
+                Users.AddRange(Followeds);
+                Users.Add(User);
+
+                
+
+
+                foreach (var u in Users)
+                {
+                    _db.Entry(u).Collection(u => u.Microposts).Load();
+                    Messages.AddRange(u.Microposts);
+                }
+
+
+
+
                 return Page();
             }
             else
