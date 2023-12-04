@@ -27,11 +27,8 @@ namespace SampleApp.RazorPage.Pages
         #endregion
         
         public User CurrentUser { get; set; }
-
         public User ProfileUser { get; set; }
-
         public bool IsFollow { get; set; }
-
         public async Task<IActionResult> OnGetAsync([FromRoute]int? id)
         {
             var sessionId = HttpContext.Session.GetString("SampleSession");
@@ -56,7 +53,6 @@ namespace SampleApp.RazorPage.Pages
 
         public async Task<IActionResult> OnPostAsync([FromRoute] int? id)
         {
-
             var sessionId = HttpContext.Session.GetString("SampleSession");
             ProfileUser = await _context.Users.Include(u => u.Microposts).FirstOrDefaultAsync(m => m.Id == id) as User;
             CurrentUser = await _context.Users.Include(u => u.Microposts).FirstOrDefaultAsync(m => m.Id.ToString() == sessionId) as User;

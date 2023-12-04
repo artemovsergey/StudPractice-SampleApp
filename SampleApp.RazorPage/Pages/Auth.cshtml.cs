@@ -17,6 +17,7 @@ namespace SampleApp.RazorPage.Pages
             _f= f;
         }
 
+
         [BindProperty]
         public User Input { get; set; }
 
@@ -24,17 +25,13 @@ namespace SampleApp.RazorPage.Pages
         {
         }
 
-
         public IActionResult OnPost()
         {
-
             User current_user = _db.Users.Where(u => u.Email == Input.Email && u.Password == Input.HashPassword(Input.Password)).FirstOrDefault<User>() as User;
             if(current_user != null)
             {
                 HttpContext.Session.SetString("SampleSession", $"{current_user.Id}");
-     
                 _f.Flash(Types.Success, $"Добро пожаловать, {current_user.Name}!", dismissable: true);
-               
                 return RedirectToPage("Index");
             }
             else
@@ -42,14 +39,12 @@ namespace SampleApp.RazorPage.Pages
                 _f.Flash(Types.Danger, $"Неверный логин или пароль!", dismissable: true);
                 return Page();
             }
-
         }
 
         public IActionResult OnGetLogout()
         {
             // сброс сессии
             HttpContext.Session.Clear();
-
             return RedirectToPage("Auth");
         }
     }

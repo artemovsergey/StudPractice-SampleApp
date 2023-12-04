@@ -7,6 +7,7 @@
 
     <div class="col-md-4 center">
         <h1> @Model.ProfileUser.Name</h1>
+
         <form method="post">
 
             @{
@@ -23,7 +24,7 @@
                 }
 
              }
-          
+
         </form>
 
         <a class="btn btn-primary" asp-page="Followers" asp-route-id=@Model.ProfileUser.Id>Подписчики</a>
@@ -46,6 +47,7 @@
             }
         </ol>
     </div>
+
 </div>
 
 

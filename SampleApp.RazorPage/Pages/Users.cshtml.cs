@@ -13,19 +13,14 @@ namespace SampleApp.RazorPage.Pages
     {
         private readonly SampleContext _context;
         private readonly ILogger<UsersModel> _log;
-        
         public UsersModel(SampleContext context, ILogger<UsersModel> log)
         {
             _context = context;
             _log = log;
         }
-
         public IList<User> Users { get;set; }
-
         public User User { get; set; }
-
         public string sessionId { get; set; }
-
         public async Task<IActionResult> OnGetAsync()
         {
             sessionId = HttpContext.Session.GetString("SampleSession");
@@ -42,8 +37,6 @@ namespace SampleApp.RazorPage.Pages
             }
 
         }
-
-
         public async Task<IActionResult> OnGetRemoveAsync(int id)
         {
             try
@@ -59,8 +52,5 @@ namespace SampleApp.RazorPage.Pages
             }
             return Page();
         }
-
-
-
     }
 }

@@ -36,9 +36,6 @@
                     </h3>
                     <ol class="microposts">
 
-
-                    
-
                         @foreach (var post in Model.Messages.OrderByDescending(p => p.CreatedAt) )
                         {
                             <p>

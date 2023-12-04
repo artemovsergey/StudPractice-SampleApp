@@ -25,15 +25,19 @@ namespace SampleApp.RazorPage.Pages
 
         public User User { get; set; }
         public string sessionId { get; set; }
-
         public IEnumerable<User> Followeds { get; set; }
-
         public List<User> Users { get; set; } = new();
-
         public List<Micropost> Messages { get; set; } = new();
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync([FromRoute] int id)
         {
+
+            var CookieId = HttpContext.Session.GetString("SampleSession");
+            if(CookieId == null)
+            {
+                RedirectToPage("Auth");
+            }
+
 
             sessionId = HttpContext.Session.GetString("SampleSession");
 
@@ -47,9 +51,6 @@ namespace SampleApp.RazorPage.Pages
                 
                 Users.AddRange(Followeds);
                 Users.Add(User);
-
-                
-
 
                 foreach (var u in Users)
                 {
