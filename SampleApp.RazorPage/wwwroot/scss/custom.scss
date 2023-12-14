@@ -153,11 +153,12 @@ aside {
     .user {
         margin-top: 5em;
         padding-top: 0;
+        margin-left:10px;
     }
 
     .content {
         display: block;
-        margin-left: 60px;
+        margin-left: 90px;
 
         img {
             display: block;
@@ -168,7 +169,7 @@ aside {
     .timestamp {
         color: lightgray;
         display: block;
-        margin-left: 60px;
+        margin-left: 90px;
     }
 
     .gravatar {
@@ -191,4 +192,8 @@ span.picture {
     input {
         border: 0;
     }
+}
+
+.users.follow {
+    padding: 0;
 }

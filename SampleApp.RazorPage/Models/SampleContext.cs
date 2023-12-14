@@ -31,7 +31,7 @@ public partial class SampleContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("PK__Micropos__3214EC07FC698AA0");
 
-            entity.Property(e => e.Content).HasColumnType("text");
+            entity.Property(e => e.Content).HasColumnType("ntext");
             entity.Property(e => e.CreatedAt).HasColumnType("datetime");
             entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
 

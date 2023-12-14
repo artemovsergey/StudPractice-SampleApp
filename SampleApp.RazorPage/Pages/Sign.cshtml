@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
-        <form method="post" class="form-signin" role="form">
+        <form asp-page="Sign" method="post" class="form-signin" role="form">
             
             <div asp-validation-summary="All"></div>
 
@@ -24,6 +24,8 @@
             <span asp-validation-for="Input.PasswordConfirmation"></span>
             <input type="password" asp-for="Input.PasswordConfirmation" class="form-control" placeholder="Повторите пароль" required>
             
+            <select asp-for="Item" asp-items="Model.Items" size="1" ></select>
+
             <button class="btn btn-lg btn-primary btn-block" type="submit">
                 Создание пользователя
             </button>

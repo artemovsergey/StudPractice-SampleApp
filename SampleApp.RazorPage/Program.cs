@@ -1,13 +1,18 @@
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using SampleApp.RazorPage.Models;
+using System.Configuration;
 
 
 namespace SampleApp.RazorPage
 {
     public class Program
     {
+       
         public static void Main(string[] args)
         {
+
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddRazorPages();
             builder.Services.AddHealthChecks();
@@ -33,10 +38,6 @@ namespace SampleApp.RazorPage
                 options.Cookie.IsEssential = true;
             });
 
-
-
-
-
             var app = builder.Build();
 
             //app.UseWelcomePage();
@@ -45,7 +46,7 @@ namespace SampleApp.RazorPage
             if (app.Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-               
+                   
             }
             else
             {
@@ -55,21 +56,10 @@ namespace SampleApp.RazorPage
             #endregion
 
             app.UseHttpsRedirection();
-
             app.UseStaticFiles();
-
             app.UseRouting();
             app.UseAuthorization();
-            
             app.UseSession();
-
-
-            /*  Регистрируем все
-                страницы Razor
-                в приложении
-                в качестве
-                конечных точек. */
-
             app.MapRazorPages();
 
             /* Регистрируем встроенную конечную точку, которая
@@ -90,5 +80,19 @@ namespace SampleApp.RazorPage
 
             app.Run();
         }
+
+
+        public static void AddAppConfiguration( HostBuilderContext hostingContext, IConfigurationBuilder config)
+        {
+            config.AddJsonFile(
+            "appsettings.json",
+            optional: true,
+           
+            reloadOnChange: true);
+
+            config.AddUserSecrets<Program>();
+
+        }
+
     }
 }

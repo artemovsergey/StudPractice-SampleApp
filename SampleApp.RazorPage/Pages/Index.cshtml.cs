@@ -23,7 +23,7 @@ namespace SampleApp.RazorPage.Pages
         }
 
 
-        public User User { get; set; }
+        public User? User { get; set; }
         public string sessionId { get; set; }
         public IEnumerable<User> Followeds { get; set; }
         public List<User> Users { get; set; } = new();
@@ -91,7 +91,7 @@ namespace SampleApp.RazorPage.Pages
                 {
                     _db.Microposts.Add(m);
                     _db.SaveChanges();
-                    _f.Flash(Types.Secondary, $"Tweet!", dismissable: true);
+                    _f.Flash(Types.Info, $"Tweet!", dismissable: true);
                     return RedirectToPage();
                 }
                 catch (Exception ex)

@@ -1,6 +1,7 @@
 using Core.Flash;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.StaticFiles;
 using SampleApp.RazorPage.Application;
 using SampleApp.RazorPage.Models;
@@ -8,11 +9,28 @@ using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
 using System.Text;
 
-
 namespace SampleApp.RazorPage.Pages
 {
     public class SignModel : PageModel
     {
+
+        public string Item { get; set; }
+
+        public IEnumerable<SelectListItem> Items { get; set; }
+         = new List<SelectListItem>
+         {
+         new SelectListItem{Value= "AllLanguage", Text="Все языки"},
+         new SelectListItem{Value= "csharp", Text="C#"},
+         new SelectListItem{Value= "python", Text= "Python"},
+         new SelectListItem{Value= "cpp", Text="C++"},
+         new SelectListItem{Value= "java", Text="Java"},
+         new SelectListItem{Value= "js", Text="JavaScript"},
+         new SelectListItem{Value= "ruby", Text="Ruby"},
+         };
+
+
+
+
         private readonly SampleContext _db;
         private IFlasher _f;
         private ILogger<SignModel> _logger;

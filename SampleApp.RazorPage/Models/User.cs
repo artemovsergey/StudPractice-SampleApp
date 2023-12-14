@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SampleApp.RazorPage.Models;
 
@@ -7,10 +8,19 @@ public partial class User
 {
     public int Id { get; set; }
 
+
+    [Required(ErrorMessage = "Требуется имя")]
+    [StringLength(20, ErrorMessage = "Maximum length is {1}")]
+    [Display(Name = "Имя пользователя")]
     public string Name { get; set; } = null!;
 
+    [Required(ErrorMessage = "Требуется почта")]
+    [EmailAddress]
+    [Display(Name = "Почта")]
     public string Email { get; set; } = null!;
 
+    [Display(Name = "Пароль")]
+    [Required(ErrorMessage = "Пароль должен быть!")]
     public string Password { get; set; } = null!;
 
     public string PasswordConfirmation { get; set; } = null!;

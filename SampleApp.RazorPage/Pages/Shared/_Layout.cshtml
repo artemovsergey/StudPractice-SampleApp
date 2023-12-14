@@ -13,10 +13,15 @@
 <body>
 
     @await Html.PartialAsync("_Header", Context.Session.GetString("SampleSession"))
- 
+
 
     <div class="container body-content">
         <main>
+
+            <environment include="Testing,Staging">
+                <div class="warning">You are currently on a testing environment</div>
+            </environment>
+
             <div flashes></div>
             @RenderBody()
         </main>
