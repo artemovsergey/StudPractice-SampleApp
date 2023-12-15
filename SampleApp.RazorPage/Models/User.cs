@@ -12,18 +12,18 @@ public partial class User
     [Required(ErrorMessage = "Требуется имя")]
     [StringLength(20, ErrorMessage = "Maximum length is {1}")]
     [Display(Name = "Имя пользователя")]
-    public string Name { get; set; } = null!;
+    public string Name { get; set; }
 
     [Required(ErrorMessage = "Требуется почта")]
     [EmailAddress]
     [Display(Name = "Почта")]
-    public string Email { get; set; } = null!;
+    public string Email { get; set; }
 
     [Display(Name = "Пароль")]
     [Required(ErrorMessage = "Пароль должен быть!")]
-    public string Password { get; set; } = null!;
+    public string Password { get; set; }
 
-    public string PasswordConfirmation { get; set; } = null!;
+    public string PasswordConfirmation { get; set; }
 
     public bool IsAdmin { get; set; }
 

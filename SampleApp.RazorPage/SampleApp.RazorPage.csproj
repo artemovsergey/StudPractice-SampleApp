@@ -10,6 +10,7 @@
   <ItemGroup>
     <PackageReference Include="AspNetCore.SassCompiler" Version="1.69.5" />
     <PackageReference Include="Core.Flash" Version="2.1.1" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.55" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.12">
       <PrivateAssets>all</PrivateAssets>
