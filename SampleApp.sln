@@ -5,8 +5,7 @@ VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleApp.RazorPage", "SampleApp.RazorPage\SampleApp.RazorPage.csproj", "{FE22BAC2-598B-415C-968C-098913AD3519}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleApp.Tests", "SampleApp.Tests\SampleApp.Tests.csproj", "{1D11D8CE-9169-4126-BF39-4D7563686357}"
-EndProject
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
