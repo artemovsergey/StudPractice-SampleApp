@@ -41,6 +41,7 @@ namespace SampleApp.RazorPage.Pages
             _logger = logger;
         }
 
+
         [BindProperty]
         public User Input { get; set; }
 
