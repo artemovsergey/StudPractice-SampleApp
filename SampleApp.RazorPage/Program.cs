@@ -1,5 +1,9 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Identity.Client;
 using SampleApp.RazorPage.Models;
 using System.Configuration;
@@ -29,6 +33,28 @@ namespace SampleApp.RazorPage
             //builder.Services.AddDbContext<SampleContext>(options => options.UseNpgsql(connection));
             builder.Services.AddDbContext<SampleContext>(options => options.UseSqlServer(connection));
             builder.Services.AddFlashes();
+
+
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme,
+                    options => builder.Configuration.Bind("JwtSettings", options))
+                
+                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
+                    options => builder.Configuration.Bind("CookieSettings", options));
+
+
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy(
+                "CanEnterSecurity",
+                policyBuilder => policyBuilder.RequireClaim("BoardingPassNumber"));
+            });
+
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("EmployeeOnly", policy => policy.RequireClaim("EmployeeNumber"));
+            });
+
 
 
             builder.Services.AddSession(options =>

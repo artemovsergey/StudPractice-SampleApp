@@ -1,0 +1,23 @@
+﻿[
+  {
+    "outputFileName": "wwwroot/output/bundle.css",
+    "inputFiles": [
+      "!wwwroot/css/lib/**/*.css", // globbing patterns are supported
+      "wwwroot/css//site.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "commentMode": "all"
+    }
+  },
+
+  {
+    "outputFileName": "wwwroot/output/all.js",
+    "inputFiles": [
+      "wwwroot/js/*.js",
+      "!wwwroot/js/ignore.js" // start with a ! to exclude files
+    ]
+  }
+
+  
+]

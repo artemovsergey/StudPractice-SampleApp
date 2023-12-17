@@ -1,8 +1,12 @@
 using Core.Flash;
+
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SampleApp.RazorPage.Application;
 using SampleApp.RazorPage.Models;
+using System.Security.Claims;
 
 namespace SampleApp.RazorPage.Pages
 {
@@ -23,14 +27,16 @@ namespace SampleApp.RazorPage.Pages
 
         public void OnGet()
         {
+
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             User current_user = _db.Users.Where(u => u.Email == Input.Email && u.Password == Input.HashPassword(Input.Password)).FirstOrDefault<User>() as User;
             if(current_user != null)
             {
                 HttpContext.Session.SetString("SampleSession", $"{current_user.Id}");
+
                 _f.Flash(Types.Success, $"Добро пожаловать, {current_user.Name}!", dismissable: true);
                 return RedirectToPage("Index");
             }
