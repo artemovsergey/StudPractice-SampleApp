@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Identity.Client;
 using SampleApp.RazorPage.Models;
+using Serilog;
 using System.Configuration;
 
 
@@ -18,6 +19,10 @@ namespace SampleApp.RazorPage
         {
 
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddSerilog();
+
+
             builder.Services.AddRazorPages();
             builder.Services.AddHealthChecks();
             #if DEBUG
@@ -64,6 +69,9 @@ namespace SampleApp.RazorPage
                 options.Cookie.IsEssential = true;
             });
 
+
+            builder.Logging.AddFile();
+
             var app = builder.Build();
 
             //app.UseWelcomePage();
@@ -102,7 +110,7 @@ namespace SampleApp.RazorPage
             app.MapHealthChecks("/healthz");
 
 
-
+            app.UseSerilogRequestLogging();
 
             app.Run();
         }

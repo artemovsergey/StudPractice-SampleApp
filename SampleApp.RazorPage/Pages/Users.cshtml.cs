@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using SampleApp.RazorPage.Models;
+using Serilog;
 
 namespace SampleApp.RazorPage.Pages
 {
@@ -23,6 +24,15 @@ namespace SampleApp.RazorPage.Pages
         public string sessionId { get; set; }
         public async Task<IActionResult> OnGetAsync()
         {
+
+            Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Debug()
+            .WriteTo.Console()
+            .WriteTo.File("logs/myapp.txt", rollingInterval: RollingInterval.Day)
+            .CreateLogger();
+
+            Log.Information("Users Page");
+
             sessionId = HttpContext.Session.GetString("SampleSession");
             Users = await _context.Users.ToListAsync();
 
