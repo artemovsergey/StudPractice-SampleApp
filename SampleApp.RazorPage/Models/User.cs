@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SampleApp.RazorPage.Validations;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -6,6 +7,7 @@ namespace SampleApp.RazorPage.Models;
 
 public partial class User
 {
+    [ExampleValidation]
     public int Id { get; set; }
 
 

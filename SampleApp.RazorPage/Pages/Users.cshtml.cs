@@ -31,7 +31,7 @@ namespace SampleApp.RazorPage.Pages
             .WriteTo.File("logs/myapp.txt", rollingInterval: RollingInterval.Day)
             .CreateLogger();
 
-            Log.Information("Users Page");
+            Log.Warning("Users Page");
 
             sessionId = HttpContext.Session.GetString("SampleSession");
             Users = await _context.Users.ToListAsync();

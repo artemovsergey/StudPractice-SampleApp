@@ -14,19 +14,19 @@ namespace SampleApp.RazorPage.Pages
     public class SignModel : PageModel
     {
 
-        public string Item { get; set; }
+        //public string Item { get; set; }
 
-        public IEnumerable<SelectListItem> Items { get; set; }
-         = new List<SelectListItem>
-         {
-         new SelectListItem{Value= "AllLanguage", Text="Все языки"},
-         new SelectListItem{Value= "csharp", Text="C#"},
-         new SelectListItem{Value= "python", Text= "Python"},
-         new SelectListItem{Value= "cpp", Text="C++"},
-         new SelectListItem{Value= "java", Text="Java"},
-         new SelectListItem{Value= "js", Text="JavaScript"},
-         new SelectListItem{Value= "ruby", Text="Ruby"},
-         };
+        //public IEnumerable<SelectListItem> Items { get; set; }
+        // = new List<SelectListItem>
+        // {
+        // new SelectListItem{Value= "AllLanguage", Text="Все языки"},
+        // new SelectListItem{Value= "csharp", Text="C#"},
+        // new SelectListItem{Value= "python", Text= "Python"},
+        // new SelectListItem{Value= "cpp", Text="C++"},
+        // new SelectListItem{Value= "java", Text="Java"},
+        // new SelectListItem{Value= "js", Text="JavaScript"},
+        // new SelectListItem{Value= "ruby", Text="Ruby"},
+        // };
 
 
 
@@ -78,6 +78,7 @@ namespace SampleApp.RazorPage.Pages
                 _db.SaveChanges();
 
                 _f.Flash(Types.Success, $"Пользователь {Input.Name} зарегистрирован!", dismissable: true);
+                _logger.LogWarning($"Пользователь {Input.Name} зарегистрирован!");
                 return RedirectToPage("./Auth");
 
             }

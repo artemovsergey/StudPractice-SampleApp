@@ -1,4 +1,12 @@
 ﻿
 <footer class="footer container">
 
+    @{
+        var showContent = false;
+    }
+    <p if="showContent">
+        <system-info add-os="true" add-machine="true" />
+    </p>
+
+
 </footer>
