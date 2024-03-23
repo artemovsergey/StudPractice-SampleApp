@@ -7,10 +7,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\scss\custom.scss" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\scss\custom.scss" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Application\" />
     <Folder Include="Data\" />
     <Folder Include="Models\" />
     <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\scss\custom.scss" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.SassCompiler" Version="1.72.0" />
   </ItemGroup>
 
 </Project>
