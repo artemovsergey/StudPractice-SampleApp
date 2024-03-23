@@ -1,13 +1,7 @@
 ﻿{
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:39088",
-      "sslPort": 44365
-    }
-  },
+
   "profiles": {
+
     "SampleApp.RazorPage": {
       "commandName": "Project",
       "dotnetRunMessages": true,
@@ -16,13 +10,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
-    },
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
     }
+
   }
 }
