@@ -1,0 +1,27 @@
+﻿@page "/Edit/{id:int}"
+@model SampleApp.RazorPage.Pages.EditModel
+@{
+    ViewData["Title"] = "Редактирование";
+}
+
+<div class="container text-center">
+    <h1> Редактирование </h1>
+
+    <div class="row border border-0 border-warning">
+        <div class="col-6 offset-3 border border-0 border-primary">
+            <form action="" method="post" class="form-signin" role="form">
+                <input type="text" hidden asp-for="User.Id" class="form-control" placeholder="Id" required autofocus>
+                <input type="text" asp-for="User.Name" class="form-control" placeholder="Name" required autofocus>
+                <input type="email" hidden asp-for="User.Email" class="form-control" placeholder="Name" required autofocus>
+                <input type="password" asp-for="User.Password" class="form-control" placeholder="Password" required autofocus>
+                <input type="password" asp-for="User.PasswordConfirmation" class="form-control" placeholder="Confirmation" required>
+                <button class="btn btn-lg btn-primary btn-block" type="submit" name="submit">
+                    Создать пользователя
+                </button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+

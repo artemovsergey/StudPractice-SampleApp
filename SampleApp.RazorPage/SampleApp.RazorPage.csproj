@@ -15,10 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\" />
-    <Folder Include="Data\" />
-    <Folder Include="Models\" />
     <Folder Include="Services\" />
+    <Folder Include="wwwroot\js\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +25,12 @@
 
   <ItemGroup>
     <PackageReference Include="AspNetCore.SassCompiler" Version="1.72.0" />
+    <PackageReference Include="Core.Flash" Version="2.1.1" />
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SampleApp.API\SampleApp.API.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,34 @@
+﻿@page "/Users"
+@model SampleApp.RazorPage.Pages.UsersModel
+@{
+    ViewData["Title"] = "Пользователи";
+}
+
+<div class="container text-center">
+    <h3> Пользователи</h3>
+</div>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Имя пользователя
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+            <tr>
+                <td>
+                    <a class="btn btn-primary" href="/Profile/@user.Id">@user.Name</a>
+                </td>
+
+                <td>
+                    <a class="btn btn-primary" asp-page="Users" asp-page-handler="RemoveUser" asp-route-Id = "@user.Id">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
