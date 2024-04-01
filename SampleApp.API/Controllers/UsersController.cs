@@ -39,7 +39,7 @@ public class UsersController : ControllerBase
         {
             return NotFound();
         }
-        var user = await _context.Users.FindAsync(id);
+        var user = await _context.Users.Include(u => u.Microposts).ThenInclude(m => m.User).FirstOrDefaultAsync(m => m.Id == id) as User;
 
         if (user == null)
         {

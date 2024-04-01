@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace SampleApp.Domen.Models
@@ -24,7 +25,11 @@ namespace SampleApp.Domen.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=SampleApp;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=SampleApp;Trusted_Connection=True;")
+                                .ConfigureWarnings(warnings =>
+                                    {
+                                        warnings.Ignore(CoreEventId.NavigationBaseIncludeIgnored);
+                                    });
             }
         }
 
