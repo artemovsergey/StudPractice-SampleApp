@@ -2,48 +2,52 @@ using Core.Flash;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using SampleApp.Domen.Models;
+using System.Text;
 
+namespace SampleApp.RazorPage.Pages;
 
-namespace SampleApp.RazorPage.Pages
+public class EditModel : PageModel
 {
-    public class EditModel : PageModel
+
+    private readonly SampleAppContext _db;
+    private readonly ILogger<EditModel> _log;
+    private readonly IFlasher _f;
+    private HttpClient _http;
+    public EditModel(IHttpClientFactory factory, ILogger<EditModel> log, IFlasher f)
     {
+        _http = factory.CreateClient("API");
+        _log = log;
+        _f = f;
+    }
 
-        private readonly SampleAppContext _db;
-        private readonly ILogger<EditModel> _log;
-        private readonly IFlasher _f;
-        public EditModel(SampleAppContext db, ILogger<EditModel> log, IFlasher f)
+    [BindProperty]
+    public User User { get; set; }
+
+    public async Task OnGet()
+    {
+        var sessionId = Convert.ToInt32(HttpContext.Session.GetString("SampleSession"));
+
+        
+        User = await _http.GetFromJsonAsync<User>($"{_http.BaseAddress}/Users/{sessionId}");
+
+    }
+
+    public async Task OnPost()
+    {
+        var content = new StringContent(JsonConvert.SerializeObject(User), Encoding.UTF8, "application/json");
+        var response = await _http.PutAsJsonAsync<User>($"{_http.BaseAddress}/Users/{User.Id}",User);
+
+        if (response.IsSuccessStatusCode)
         {
-            _db = db;
-            _log = log;
-            _f = f;
+            _log.LogError($"Пользователь обновлен!");
+            _f.Primary($"Пользователь обновлен!");
         }
-
-        [BindProperty]
-        public User User { get; set; }
-
-        public void OnGet()
+        else
         {
-            var sessionId = Convert.ToInt32(HttpContext.Session.GetString("SampleSession"));
-            User = _db.Users.Find(sessionId);
-        }
-
-        public void OnPost()
-        {
-            _db.Update(User);
-            //_db.Entry(User).State = EntityState.Modified;
-            try
-            {
-                _db.SaveChanges();
-                _log.LogError($"Пользователь обновлен!");
-                _f.Primary($"Пользователь обновлен!");
-            }
-            catch (Exception ex)
-            {
-                _log.LogError($"Ошибка: {ex.InnerException.Message}");
-                _f.Danger($"Ошибка: {ex.InnerException.Message}");
-            }
+            _log.LogError($"Ошибка обновления");
+            _f.Danger($"Ошибка обновления");
         }
     }
 }
