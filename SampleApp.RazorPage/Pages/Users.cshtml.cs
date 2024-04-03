@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SampleApp.Domen.Models;
 
-using System.Diagnostics.CodeAnalysis;
-
 namespace SampleApp.RazorPage.Pages;
 
 public class UsersModel : PageModel
@@ -13,30 +11,36 @@ public class UsersModel : PageModel
     private readonly SampleAppContext _db;
     private readonly ILogger<UsersModel> _log;
     private readonly IFlasher _f;
+    private readonly HttpClient _http;
 
     public IEnumerable<User> Users { get; set; } = new List<User>();
 
-    public UsersModel(SampleAppContext db, ILogger<UsersModel> log, IFlasher f)
+    public UsersModel(IHttpClientFactory factory, ILogger<UsersModel> log, IFlasher f)
     {
-        _db = db;
+        _http = factory.CreateClient("API");
         _log = log;
         _f = f;
     }
 
-    public void OnGet()
+    public async Task OnGet()
     {
-       Users = _db.Users.ToList();
+        var response = await _http.GetAsync($"{_http.BaseAddress}/Users");
+        Users = await response.Content.ReadFromJsonAsync<IEnumerable<User>>();
     }
 
-    public IActionResult OnGetRemoveUser([FromQuery] int Id)
+    public async Task<IActionResult> OnGetRemoveUser([FromQuery] int Id)
     {
-        var user = _db.Users.Find(Id);
-        if(user != null)
+        var response = await _http.DeleteAsync($"{_http.BaseAddress}/Users/{Id}");
+
+        if (response.IsSuccessStatusCode)
         {
-            _db.Users.Remove(user);
-            _db.SaveChanges();
+            return RedirectToPage("Users");
         }
-        return RedirectToPage("Users");
+        else
+        {
+            _log.LogInformation("Не удается удалить пользователя!");
+            return RedirectToPage();
+        }
     }
 
 }
