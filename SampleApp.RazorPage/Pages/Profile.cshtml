@@ -23,11 +23,12 @@
     <div class="col-md-8">
 
         <div id="follow_form">
+
             <form method="post">
 
 
                 @{
-                    if (Model.CurrentUser != Model.ProfileUser)
+                    if (Model.CurrentUser.Id != Model.ProfileUser.Id)
                     {
                         if (!Model.IsFollow)
                         {

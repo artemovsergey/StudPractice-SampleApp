@@ -10,7 +10,6 @@ namespace SampleApp.RazorPage.Pages;
 public class ProfileModel : PageModel
 {
 
-    private readonly SampleAppContext _db;
     private readonly ILogger<ProfileModel> _log;
     private readonly IFlasher _f;
     private HttpClient _http;
@@ -20,9 +19,8 @@ public class ProfileModel : PageModel
 
     public bool IsFollow { get; set; }
 
-    public ProfileModel(SampleAppContext db, ILogger<ProfileModel> log, IFlasher f, IHttpClientFactory factory)
+    public ProfileModel(ILogger<ProfileModel> log, IFlasher f, IHttpClientFactory factory)
     {
-        _db = db;
         _log = log;
         _f = f;
         _http = factory.CreateClient("API");
@@ -30,6 +28,7 @@ public class ProfileModel : PageModel
 
     public async Task<IActionResult> OnGetAsync([FromRoute] int? id)
     {
+
         var sessionId = HttpContext.Session.GetString("SampleSession");
 
         var response = await _http.GetAsync($"{_http.BaseAddress}/Users/{id}");
@@ -46,7 +45,7 @@ public class ProfileModel : PageModel
             CurrentUser = await responseCurrentUser.Content.ReadFromJsonAsync<User>();
         }
 
-        var responseRelation = await _http.GetAsync($"{_http.BaseAddress}/Users/Find?followerId={CurrentUser.Id}&followedId={ProfileUser.Id}");
+        var responseRelation = await _http.GetAsync($"{_http.BaseAddress}/Relations/Find?followerId={CurrentUser.Id}&followedId={ProfileUser.Id}");
 
         if (responseRelation.IsSuccessStatusCode)
         {
@@ -59,29 +58,47 @@ public class ProfileModel : PageModel
 
     public async Task<IActionResult> OnPostAsync([FromRoute] int? id)
     {
+
         var sessionId = HttpContext.Session.GetString("SampleSession");
-        ProfileUser = await _db.Users.Include(u => u.Microposts).FirstOrDefaultAsync(m => m.Id == id) as User;
-        CurrentUser = await _db.Users.Include(u => u.Microposts).FirstOrDefaultAsync(m => m.Id.ToString() == sessionId) as User;
+
+        var response = await _http.GetAsync($"{_http.BaseAddress}/Users/{id}");
+
+        if (response.IsSuccessStatusCode)
+        {
+            ProfileUser = await response.Content.ReadFromJsonAsync<User>(new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        }
+
+        var responseCurrentUser = await _http.GetAsync($"{_http.BaseAddress}/Users/{sessionId}");
+
+        if (responseCurrentUser.IsSuccessStatusCode)
+        {
+            CurrentUser = await responseCurrentUser.Content.ReadFromJsonAsync<User>();
+        }
+
 
         // если текущий пользователь подписан на профиль пользователя
-        var result = _db.Relations.Where(r => r.Follower == CurrentUser && r.Followed == ProfileUser).FirstOrDefault();
 
-        if (result != null)
+        var responseRelation = await _http.GetAsync($"{_http.BaseAddress}/Relations/Find?followerId={CurrentUser.Id}&followedId={ProfileUser.Id}");
+
+        if (responseRelation.IsSuccessStatusCode)
         {
-            IsFollow = true;
+            IsFollow = await responseRelation.Content.ReadFromJsonAsync<bool>();
         }
-        else
-        {
-            IsFollow = false;
-        }
+
 
         if (IsFollow == false)
         {
             try
             {
-                _db.Relations.Add(new Relation() { FollowerId = CurrentUser.Id, FollowedId = ProfileUser.Id });
-                _db.SaveChanges();
-                _f.Flash(Types.Success, $"Пользователь {CurrentUser.Name} подписался на {ProfileUser.Name}!");
+                var relation = new Relation() { FollowerId = CurrentUser.Id, FollowedId = ProfileUser.Id };
+                var responseFollow = await _http.PostAsJsonAsync($"{_http.BaseAddress}/Relations",relation);
+
+                if (responseFollow.IsSuccessStatusCode)
+                {
+                    _f.Flash(Types.Success, $"Пользователь {CurrentUser.Name} подписался на {ProfileUser.Name}!");
+                    IsFollow = true;
+                }
+                
             }
             catch (Exception ex)
             {
@@ -93,10 +110,14 @@ public class ProfileModel : PageModel
 
             try
             {
-                var result2 = _db.Relations.Where(r => r.Follower == CurrentUser && r.Followed == ProfileUser).FirstOrDefault();
-                _db.Relations.Remove(result2);
-                _db.SaveChanges();
+
+                var responseFindRelation = await _http.GetAsync($"{_http.BaseAddress}/Relations/FindRelation?followerId={CurrentUser.Id}&followedId={ProfileUser.Id}");
+                var currentRelation = await responseFindRelation.Content.ReadFromJsonAsync<Relation>();
+
+                var responseDeleteRelation = await _http.DeleteAsync($"{_http.BaseAddress}/Relations/{currentRelation.Id}");
+
                 _f.Flash(Types.Warning, $"Пользователь {CurrentUser.Name} отписался от {ProfileUser.Name}!");
+                IsFollow = false;
             }
             catch (Exception ex)
             {

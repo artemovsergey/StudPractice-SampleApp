@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
 using SampleApp.Domen.Models;
 
-
 namespace SampleApp.RazorPage.Pages;
 
 public class IndexModel : PageModel

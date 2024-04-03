@@ -32,6 +32,20 @@ public class RelationsController : ControllerBase
 
     }
 
+    [HttpGet("FindRelation")]
+    public async Task<ActionResult<Relation>> FindRelationById(int followerId, int followedId)
+    {
+        var relation = _context.Relations.Where(r => r.FollowerId == followerId && r.FollowedId == followedId).FirstOrDefault();
+
+        if(relation == null)
+        {
+            return BadRequest("Такой связи нет!");
+        }
+
+        return Ok(relation);
+
+    }
+
 
     // GET: api/Relations
     [HttpGet]
@@ -94,18 +108,20 @@ public class RelationsController : ControllerBase
     }
 
     // POST: api/Relations
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<Relation>> PostRelation(Relation relation)
+    public async Task<ActionResult<Relation>> PostRelation(Relation r)
     {
-      if (_context.Relations == null)
-      {
-          return Problem("Entity set 'SampleAppContext.Relations'  is null.");
-      }
-        _context.Relations.Add(relation);
-        await _context.SaveChangesAsync();
 
-        return CreatedAtAction("GetRelation", new { id = relation.Id }, relation);
+        try
+        {
+            _context.Relations.Add(r);
+            _context.SaveChanges();
+            return CreatedAtAction("GetRelation", new { id = r.Id }, r);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest($"Неверные значения id: {ex.InnerException.Message}");
+        }
     }
 
     // DELETE: api/Relations/5

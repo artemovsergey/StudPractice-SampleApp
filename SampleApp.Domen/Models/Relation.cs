@@ -9,6 +9,6 @@ public partial class Relation
     public int FollowerId { get; set; }
     public int FollowedId { get; set; }
 
-    public virtual User Followed { get; set; } = null!;
-    public virtual User Follower { get; set; } = null!;
+    public virtual User? Followed { get; set; }
+    public virtual User? Follower { get; set; }
 }
