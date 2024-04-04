@@ -1,4 +1,6 @@
 ﻿@using SampleApp.Domen.Models
+@inject IHttpClientFactory factory
+
 
 <header class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
     <div class="container">
@@ -23,10 +25,11 @@
                 @{
                     if (Context.Session.GetString("SampleSession") != null)
                     {
-                        using SampleAppContext db = new();
-                        var sessionId = Convert.ToInt32(Context.Session.GetString("SampleSession"));
-                        var user = db.Users.Find(sessionId);
 
+                        var sessionId = Convert.ToInt32(Context.Session.GetString("SampleSession"));
+                        HttpClient _http = factory.CreateClient("API");
+                        var user = await _http.GetFromJsonAsync<User>($"{_http.BaseAddress}/Users/{sessionId}");
+                        
 
                         <li class="nav-item"><a class="nav-link" href="/Users">Пользователи</a></li>
                         <li class="nav-item"><a class="nav-link" href="/About">Автор</a></li>

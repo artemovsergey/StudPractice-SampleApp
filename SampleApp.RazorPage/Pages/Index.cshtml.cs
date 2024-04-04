@@ -32,16 +32,12 @@ public class IndexModel : PageModel
     public async Task<IActionResult> OnGetAsync([FromRoute] int id)
     {
 
-        var CookieId = HttpContext.Session.GetString("SampleSession");
-        if (CookieId == null)
+        var sessionId = HttpContext.Session.GetString("SampleSession");
+        if (sessionId == null)
         {
             RedirectToPage("Auth");
         }
-
-
-        sessionId = HttpContext.Session.GetString("SampleSession");
-
-        if (sessionId != null)
+        else
         {
             User = await _db.Users.Include(u => u.Microposts)
                                   .Include(u => u.RelationFollowers).ThenInclude(r => r.Followed)
@@ -58,15 +54,11 @@ public class IndexModel : PageModel
                 Messages.AddRange(u.Microposts);
             }
 
-
-
-
             return Page();
         }
-        else
-        {
-            return RedirectToPage("Auth");
-        }
+
+
+       
 
     }
 
@@ -97,10 +89,12 @@ public class IndexModel : PageModel
             catch (Exception ex)
             {
                 _logger.Log(LogLevel.Error, $"Ошибка создания сообщения: {ex.InnerException}");
+
+                return Page();
             }
 
 
-            return Page();
+
         }
         else
         {
