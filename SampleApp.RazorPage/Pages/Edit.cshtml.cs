@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using SampleApp.Domen.Models;
+using System.Net.Http.Json;
 using System.Text;
 
 namespace SampleApp.RazorPage.Pages;
@@ -37,7 +38,7 @@ public class EditModel : PageModel
     public async Task OnPost()
     {
         var content = new StringContent(JsonConvert.SerializeObject(User), Encoding.UTF8, "application/json");
-        var response = await _http.PutAsJsonAsync<User>($"{_http.BaseAddress}/Users/{User.Id}",User);
+        var response = await _http.PutAsJsonAsync<User>($"{_http.BaseAddress}/Users/{User.Id}", User);
 
         if (response.IsSuccessStatusCode)
         {

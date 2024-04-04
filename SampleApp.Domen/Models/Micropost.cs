@@ -8,8 +8,8 @@ public partial class Micropost
     public int Id { get; set; }
     public string Content { get; set; } = null!;
     public int UserId { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime UpdatedAt { get; set; } = DateTime.Now;
 
-    public virtual User User { get; set; } = null!;
+    public User? User { get; set; }
 }

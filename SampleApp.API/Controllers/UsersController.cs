@@ -36,15 +36,29 @@ public class UsersController : ControllerBase
     public async Task<ActionResult<IEnumerable<User>>> GetUserFolloweds([FromRoute] int id)
     {
 
-        
-        var user = _context.Users.Include(u => u.RelationFollowers)
-                              .ThenInclude(r => r.Followed)
-                              .Where(u => u.Id == id)
-                              .FirstOrDefault();
+        var relations = await _context.Relations.Where(r => r.FollowerId == id).ToListAsync();
+        var followedsId = relations.Select(item => item.FollowedId).ToList();
 
-        return user.RelationFollowers.Select(item => item.Followed).ToList();
+        List<User> users = new List<User>();
+        foreach (var i in followedsId)
+        {
+            var user = await _context.Users.Include(u => u.Microposts).Where(u => u.Id == i).FirstOrDefaultAsync();
+            users.Add(user);
+        }
+
+        //var user = _context.Users
+        //                         //.Include(u => u.RelationFollowers)
+        //                         //.ThenInclude(r => r.Followed)
+        //                         //.ThenInclude(u => u.Microposts)
+        //                         //.ThenInclude(m => m.User)
+        //                         .Where(u => u.Id == id)
+        //                         .FirstOrDefault();
+
+        return users;
 
     }
+
+
 
 
     [HttpGet("{id}/followers")]
@@ -60,6 +74,15 @@ public class UsersController : ControllerBase
         return user.RelationFolloweds.Select(item => item.Follower).ToList();
 
     }
+
+
+    [HttpGet("{id}/messages")]
+    public async Task<ActionResult<IEnumerable<Micropost>>> GetUserMicroposts([FromRoute] int id)
+    {
+
+        return await _context.Microposts.Include(m => m.User).Where(m => m.UserId == id).ToListAsync();
+    }
+
 
     // GET: api/Users/5
     [HttpGet("{id}")]
@@ -80,7 +103,6 @@ public class UsersController : ControllerBase
     }
 
     // PUT: api/Users/5
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
     public async Task<IActionResult> PutUser(int id, User user)
     {
