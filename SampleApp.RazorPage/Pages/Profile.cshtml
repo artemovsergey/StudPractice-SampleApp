@@ -2,6 +2,9 @@
 @using SampleApp.Domen.Application
 @model SampleApp.RazorPage.Pages.ProfileModel
 
+@{
+    ViewData["Title"] = $"Профиль: {Model.ProfileUser.Name}";
+}
 
 
 <div class="row">

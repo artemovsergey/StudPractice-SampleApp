@@ -31,6 +31,36 @@ public class UsersController : ControllerBase
         return await _context.Users.ToListAsync();
     }
 
+
+    [HttpGet("{id}/followeds")]
+    public async Task<ActionResult<IEnumerable<User>>> GetUserFolloweds([FromRoute] int id)
+    {
+
+        
+        var user = _context.Users.Include(u => u.RelationFollowers)
+                              .ThenInclude(r => r.Followed)
+                              .Where(u => u.Id == id)
+                              .FirstOrDefault();
+
+        return user.RelationFollowers.Select(item => item.Followed).ToList();
+
+    }
+
+
+    [HttpGet("{id}/followers")]
+    public async Task<ActionResult<IEnumerable<User>>> GetUserFollowers([FromRoute] int id)
+    {
+
+
+        var user = _context.Users.Include(u => u.RelationFolloweds)
+                              .ThenInclude(r => r.Follower)
+                              .Where(u => u.Id == id)
+                              .FirstOrDefault();
+
+        return user.RelationFolloweds.Select(item => item.Follower).ToList();
+
+    }
+
     // GET: api/Users/5
     [HttpGet("{id}")]
     public async Task<ActionResult<User>> GetUser(int id)

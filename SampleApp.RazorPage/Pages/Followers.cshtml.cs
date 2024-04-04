@@ -4,34 +4,28 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using SampleApp.Domen.Models;
 
-
 namespace SampleApp.RazorPage.Pages;
 
 public class FollowersModel : PageModel
 {
-    #region 
-    private readonly SampleAppContext _context;
-    private readonly ILogger<FollowersModel> _logger;
-    private readonly IFlasher _f;
-    public FollowersModel(SampleAppContext context, ILogger<FollowersModel> logger, IFlasher f)
-    {
-        _context = context;
-        _logger = logger;
-        _f = f;
-    }
-    #endregion
-
+   
     public User ProfileUser { get; set; }
     public IEnumerable<User> Followers { get; set; }
 
-    public void OnGet(int id)
-    {
-        ProfileUser = _context.Users.Include(u => u.RelationFolloweds)
-                                    .ThenInclude(r => r.Follower)
-                                    .Where(u => u.Id == id)
-                                    .FirstOrDefault();
+    private HttpClient _http;
 
-        Followers = ProfileUser.RelationFolloweds.Select(item => item.Follower).ToList();
+    public FollowersModel(IHttpClientFactory factory)
+    {
+        _http = factory.CreateClient("API");
+    }
+
+
+    public async Task OnGet([FromRoute] int id)
+    {
+
+        ProfileUser = await _http.GetFromJsonAsync<User>($"{_http.BaseAddress}/Users/{id}"); 
+
+        Followers = await _http.GetFromJsonAsync<IEnumerable<User>>($"{_http.BaseAddress}/Users/{id}/followers");
 
     }
 }
