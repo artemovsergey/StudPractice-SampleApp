@@ -14,7 +14,9 @@ public partial class User
     }
 
     public int Id { get; set; }
-    public string Name { get; set; } = null!;
+
+    [Required(ErrorMessage = "Имя должно быть!")]
+    public string Name { get; set; }
 
     [Required(ErrorMessage ="Почта должна быть!")]
     public string Email { get; set; } = null!;

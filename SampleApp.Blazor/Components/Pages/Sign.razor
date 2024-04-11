@@ -1,0 +1,53 @@
+﻿@page "/"
+@page "/Sign"
+@using SampleApp.Domen.Models
+@using System.ComponentModel.DataAnnotations
+@using SampleApp.Domen.Validations
+<PageTitle> Регистрация </PageTitle>
+@rendermode RenderMode.InteractiveServer
+
+<div class="container text-center">
+    <h3> Регистрация </h3>
+
+    <div class="row border border-0 border-warning">
+        <div class="col-6 offset-3 border border-0 border-primary">
+
+            <EditForm method="post" EditContext="model" OnValidSubmit="@Submit" OnInvalidSubmit="@Submit">
+
+                <DataAnnotationsValidator/>
+                <ValidationSummary/>
+
+                <InputText class="input-group" placeholder="Login" @bind-Value="p.Name" />
+                <ValidationMessage For="@(() => p.Name)"/>
+
+                <button type="submit">Submit</button>
+
+            </EditForm>
+
+        </div>
+    </div>
+
+</div>
+
+@code {
+
+    public Person p { get; set; } = new();
+    EditContext model;
+
+    protected override async Task OnInitializedAsync()
+    {
+        model = new(p);
+    }
+
+    public class Person()
+    {
+        [PersonNameValidator(new[] { "admin" })]
+        [Required(ErrorMessage = "Имя должно быть не пустое")]
+        public string Name { get; set; }
+    }
+
+    public async Task Submit()
+    {
+        Console.WriteLine($"Модель: {model.Validate()}");
+    }
+}
