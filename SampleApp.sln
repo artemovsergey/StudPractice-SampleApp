@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleApp.Domen", "SampleAp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleApp.API", "SampleApp.API\SampleApp.API.csproj", "{BEF555D6-9CF2-4CAB-A508-8D22B782FDA8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleApp.Tests", "..\..\Users\asv\Desktop\StudPractice-SampleApp\SampleApp.Tests\SampleApp.Tests.csproj", "{446115B3-33AA-4F97-A550-46850B8EAA3C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApp.Blazor", "SampleApp.Blazor\SampleApp.Blazor.csproj", "{01B3BF6B-8F82-41C1-8554-8A111B4BD844}"
 EndProject
 Global
